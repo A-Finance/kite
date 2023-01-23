@@ -20,6 +20,14 @@ config :kite, KiteWeb.Endpoint,
   pubsub_server: Kite.PubSub,
   live_view: [signing_salt: "QHJHmGt/"]
 
+config :kite,
+  api_key: "58swvcx6orior22r",
+  api_secret: "bpjkozj39u26mu9sg2c6lovmvy8thl8l",
+  request_options: [
+    timeout: 5_000,
+    recv_timeout: 5_000
+  ]
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

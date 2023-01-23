@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :kite, Kite.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "",
   hostname: "localhost",
   database: "kite_dev",
   stacktrace: true,
