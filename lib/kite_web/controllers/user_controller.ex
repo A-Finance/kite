@@ -17,6 +17,7 @@ defmodule KiteWeb.UserController do
   @create_session_path "/session/token"
   @funds_and_margins_path "/user/margins"
 
+  # User hits login page, GET req -> redirected to zerodha login page, 302 req-> Login with zerodha credentials, GET req -> Redirect user with request token, 302 req
   def login(conn, _params) do
     conn
     |> redirect(
@@ -26,6 +27,7 @@ defmodule KiteWeb.UserController do
     )
   end
 
+  # Take the request token from login API, GET req-> Generate checksum -> Send checksum, api_key, request_token - POST req -> Receive user Json with access_token, POST res
   def create_session(conn, %{"request_token" => request_token}) when is_binary(request_token) do
     params = %{
       api_key: Application.fetch_env!(:kite, :api_key),

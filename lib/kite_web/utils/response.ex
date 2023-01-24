@@ -9,7 +9,6 @@ defmodule KiteWeb.Response do
 
   @csv_content_type {"Content-Type", "text/csv"}
 
-  @doc false
   def parse_response(%HTTPoison.Response{} = response) do
     case response do
       %{body: body, headers: headers, status_code: status} when status in @success_status_codes ->
@@ -43,7 +42,6 @@ defmodule KiteWeb.Response do
     has_csv_header?(tail)
   end
 
-  @doc false
   def parse_error(%HTTPoison.Error{} = error) do
     error =
       %{"message" => "invalid response - " <> inspect(error)}

@@ -16,10 +16,8 @@ defmodule KiteWeb.Request do
     recv_timeout: 5_000
   ]
 
-  @spec api_version() :: String.t()
   def api_version, do: @api_version
 
-  @spec get(String.t(), map() | nil, list, list) :: Response.success() | Response.error()
   def get(path, query, headers, opts \\ []) do
     HTTPoison.get(
       build_url(path, query),
@@ -29,7 +27,6 @@ defmodule KiteWeb.Request do
     |> parse_response()
   end
 
-  @spec delete(String.t(), map() | nil, list, list) :: Response.success() | Response.error()
   def delete(path, query, headers, opts \\ []) do
     HTTPoison.delete(
       build_url(path, query),
@@ -39,7 +36,6 @@ defmodule KiteWeb.Request do
     |> parse_response()
   end
 
-  @spec post(String.t(), map(), list, list) :: Response.success() | Response.error()
   def post(path, body, headers, opts \\ []) do
     HTTPoison.post(
       build_url(path, nil),
@@ -50,7 +46,6 @@ defmodule KiteWeb.Request do
     |> parse_response()
   end
 
-  @spec put(String.t(), map(), list, list) :: Response.success() | Response.error()
   def put(path, body, headers, opts \\ []) do
     HTTPoison.put(
       build_url(path, nil),
