@@ -14,11 +14,12 @@ defmodule KiteWeb.Router do
     plug(:accepts, ["json"])
   end
 
-  # scope "/mamey", KiteWeb do
-  #   pipe_through(:browser)
+  scope "/", KiteWeb do
+    pipe_through(:browser)
 
-  #   get("/", PageController, :home)
-  # end
+    resources("/users", UserController)
+    get("/", PageController, :home)
+  end
 
   scope "/user", KiteWeb do
     pipe_through(:api)

@@ -1,0 +1,26 @@
+<.header>
+  User <%= @user.id %>
+  <:subtitle>This is a user record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/users/#{@user}/edit"}>
+      <.button>Edit user</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="User name"><%= @user.user_name %></:item>
+  <:item title="User shortname"><%= @user.user_shortname %></:item>
+  <:item title="User type"><%= @user.user_type %></:item>
+  <:item title="Email"><%= @user.email %></:item>
+  <:item title="Access token"><%= @user.access_token %></:item>
+  <:item title="Avatar url"><%= @user.avatar_url %></:item>
+  <:item title="Public token"><%= @user.public_token %></:item>
+  <:item title="Refresh token"><%= @user.refresh_token %></:item>
+  <:item title="Broker"><%= @user.broker %></:item>
+  <:item title="Enctoken"><%= @user.enctoken %></:item>
+  <:item title="Login time"><%= @user.login_time %></:item>
+  <:item title="User"><%= @user.user_id %></:item>
+</.list>
+
+<.back navigate={~p"/users"}>Back to users</.back>
