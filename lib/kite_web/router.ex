@@ -14,15 +14,17 @@ defmodule KiteWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  # Static pages
   scope "/", KiteWeb do
     pipe_through(:browser)
 
-    resources("/users", UserController)
-    get("/", PageController, :home)
+    get("/", PageController, :login)
+    # get("/", PageController, :home)
   end
 
+  # APIs
   scope "/user", KiteWeb do
-    pipe_through(:api)
+    pipe_through(:browser)
 
     get("/login", UserController, :login)
     get("/login/redirect", UserController, :create_session)
