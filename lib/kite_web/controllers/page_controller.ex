@@ -1,9 +1,12 @@
 defmodule KiteWeb.PageController do
   use KiteWeb, :controller
 
-  def home(conn, _params) do
-    # The home page is often custom made,
+  alias Kite.User_Profile
+  alias Kite.User_Profile.User
+
+  def login(conn, _params) do
+    # The login/static page is often custom made,
     # so skip the default app layout.
-    render(conn, :home, layout: false)
+    render(conn, :login, layout: false)
   end
 end
