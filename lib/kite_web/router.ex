@@ -27,7 +27,7 @@ defmodule KiteWeb.Router do
     pipe_through(:browser)
 
     get("/login", UserController, :login)
-    get("/login/redirect", UserController, :create_session)
+    get("/details", UserController, :create_session)
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
