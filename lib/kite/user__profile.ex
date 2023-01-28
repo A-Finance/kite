@@ -35,24 +35,30 @@ defmodule Kite.User_Profile do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
-
-  @doc """
-  Creates a user.
-
-  ## Examples
-
-      iex> create_user(%{field: value})
-      {:ok, %User{}}
-
-      iex> create_user(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
+    user = get_user!(attrs["user_id"])
+
+    if user != Nil do
+      # IO.inspect(user)
+      user
+    else
+      data =
+        %User{}
+        |> User.changeset(attrs)
+        |> Repo.insert()
+
+      IO.inspect(data)
+    end
+
+    # case get_user!(attrs["user_id"]) do
+    #   {:ok, user} ->
+    #     user
+
+    #   {:error, error} ->
+    #     %User{}
+    #     |> User.changeset(attrs)
+    #     |> Repo.insert()
+    # end
   end
 
   @doc """
@@ -64,6 +70,21 @@ defmodule Kite.User_Profile do
       {:ok, %User{}}
 
       iex> update_user(user, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+
+  def get_user!(user_id), do: Repo.get_by!(User, user_id: user_id)
+
+  @doc """
+  Creates a user.
+
+  ## Examples
+
+      iex> create_user(%{field: value})
+      {:ok, %User{}}
+
+      iex> create_user(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """

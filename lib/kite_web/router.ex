@@ -28,6 +28,7 @@ defmodule KiteWeb.Router do
 
     get("/login", UserController, :login)
     get("/details", UserController, :create_session)
+    get("/all", UserController, :index)
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

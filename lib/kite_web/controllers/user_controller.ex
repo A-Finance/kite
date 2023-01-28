@@ -19,10 +19,10 @@ defmodule KiteWeb.UserController do
   @create_session_path "/session/token"
   @funds_and_margins_path "/user/margins"
 
-  # def index(conn, _params) do
-  #   users = User_Profile.list_users()
-  #   render(conn, :index, users: users)
-  # end
+  def index(conn, _params) do
+    users = User_Profile.list_users()
+    render(conn, :index, users: users)
+  end
 
   def show(conn, %{"id" => id}) do
     user = User_Profile.get_user!(id)
@@ -51,13 +51,46 @@ defmodule KiteWeb.UserController do
     |> case do
       {:ok, user} ->
         # json(conn, %{user: user_data})
-        # IO.puts(user)
-        render(conn, :show, user: user)
+        saved_user = save_user(conn, user)
+        # IO.inspect(saved_user)
+        render(conn, :show, user: saved_user)
 
       {:error, error} ->
         {:error, error}
     end
   end
+
+  defp save_user(conn, user) do
+    case User_Profile.create_user(user) do
+      {:ok, user} ->
+        IO.inspect(user)
+        user
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
+        changeset
+    end
+  end
+
+  # %{
+  # "access_token" => "LjXNkqIAYFT4fk2S15MJIK79A6yl5NfY",
+  # "api_key" => "58swvcx6orior22r",
+  # "avatar_url" => nil,
+  # "broker" => "ZERODHA",
+  # "email" => "24.aarthi@gmail.com",
+  # "enctoken" =>
+  #   "qrsrzInKoa/BgoUJvaNFhdgfhy/lxYOmT0wbgkEGSQwNRivmbklFDvoHIjE5/+91vauzdR6+/352PM2DBBPFXDRN9MuNlo0N83MCPeIRz6aQL3xesgN5LJg6Y+CFM0U=",
+  # "exchanges" => ["NSE", "MF", "BSE"],
+  # "login_time" => "2023-01-28 11:44:10",
+  # "meta" => %{"demat_consent" => "consent"},
+  # "order_types" => ["MARKET", "LIMIT", "SL", "SL-M"],
+  # "products" => ["CNC", "NRML", "MIS", "BO", "CO"],
+  # "public_token" => "YXKqlcBq3AQdBTA9J6VsSc7MgP3QcXnH",
+  # "refresh_token" => "",
+  # "user_id" => "SSE119",
+  # "user_name" => "Ranjangaon Ram Mohan Aarthi",
+  # "user_shortname" => "Ranjangaon",
+  # "user_type" => "individual"}
 
   defp generate_checksum(request_token) do
     :crypto.hash(
