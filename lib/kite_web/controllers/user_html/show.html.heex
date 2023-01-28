@@ -1,0 +1,30 @@
+<.header>
+  User <%= @user["user_id"] %>
+</.header>
+
+<.list>
+  <:item title="Username"><%= @user["user_name"] %></:item>
+  <:item title="User shortname"><%= @user["user_shortname"] %></:item>
+  <:item title="User type"><%= @user["user_type"] %></:item>
+  <:item title="Email"><%= @user["email"] || Nil %></:item>
+  <:item title="Avatar url"><%= @user["avatar_url"] || "Nil" %></:item>
+  <:item title="Login time"><%= @user["login_time"] %></:item>
+  <:item title="User Id"><%= @user["broker"] %></:item>
+  <:item title="Exchanges">
+    <%= for user <- @user["exchanges"] do %>
+      <span><%= user %></span>&nbsp;
+    <% end %>
+  </:item>
+  <:item title="Order types">
+    <%= for user <- @user["order_types"] do %>
+      <span><%= user %></span>&nbsp;
+    <% end %>
+  </:item>
+  <:item title="Products">
+    <%= for user <- @user["products"] do %>
+      <span><%= user %></span>&nbsp;
+    <% end %>
+  </:item>
+</.list>
+
+<.back navigate={~p"/"}>Back to login</.back>
