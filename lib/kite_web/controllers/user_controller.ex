@@ -25,7 +25,7 @@ defmodule KiteWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = User_Profile.get_user!(id)
+    user = User_Profile.get_user(id)
     render(conn, :show, user: user)
   end
 
@@ -52,7 +52,7 @@ defmodule KiteWeb.UserController do
       {:ok, user} ->
         # json(conn, %{user: user_data})
         saved_user = save_user(conn, user)
-        # IO.inspect(saved_user)
+        IO.inspect(saved_user)
         render(conn, :show, user: saved_user)
 
       {:error, error} ->
@@ -61,8 +61,11 @@ defmodule KiteWeb.UserController do
   end
 
   defp save_user(conn, user) do
+    user |> IO.inspect()
+    "user" |> IO.inspect()
     case User_Profile.create_user(user) do
       {:ok, user} ->
+        IO.inspect("success")
         IO.inspect(user)
         user
 

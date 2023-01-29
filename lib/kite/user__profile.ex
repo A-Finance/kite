@@ -36,18 +36,17 @@ defmodule Kite.User_Profile do
 
   """
   def create_user(attrs \\ %{}) do
-    user = get_user!(attrs["user_id"])
+    user = get_user(attrs["user_id"])
 
-    if user != Nil do
+    if user != nil do
       # IO.inspect(user)
-      user
+      {:ok, user}
     else
       data =
         %User{}
         |> User.changeset(attrs)
         |> Repo.insert()
 
-      IO.inspect(data)
     end
 
     # case get_user!(attrs["user_id"]) do
@@ -75,6 +74,7 @@ defmodule Kite.User_Profile do
   """
 
   def get_user!(user_id), do: Repo.get_by!(User, user_id: user_id)
+  def get_user(user_id), do: Repo.get_by(User, user_id: user_id)
 
   @doc """
   Creates a user.
