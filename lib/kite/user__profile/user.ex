@@ -4,7 +4,6 @@ defmodule Kite.User_Profile.User do
 
   schema "users" do
     field(:access_token, :string)
-    field(:api_key, :string)
     field(:avatar_url, :string)
     field(:broker, :string)
     field(:email, :string)

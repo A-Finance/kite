@@ -9,7 +9,7 @@
   <:item title="Email"><%= @user.email %></:item>
   <:item title="Avatar url"><%= @user.avatar_url || "Nil" %></:item>
   <:item title="Login time"><%= @user.login_time %></:item>
-  <:item title="User Id"><%= @user.broker %></:item>
+  <:item title="Broker"><%= @user.broker %></:item>
   <:item title="Exchanges">
     <%= for user <- @user.exchanges do %>
       <span><%= user %></span>&nbsp;

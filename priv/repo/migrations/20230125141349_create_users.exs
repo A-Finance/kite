@@ -8,7 +8,6 @@ defmodule Kite.Repo.Migrations.CreateUsers do
       add(:user_type, :string)
       add(:email, :string)
       add(:access_token, :string)
-      add(:api_key, :string)
       add(:avatar_url, :string)
       add(:public_token, :string)
       add(:refresh_token, :string)
