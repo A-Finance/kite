@@ -27,6 +27,7 @@ defmodule KiteWeb.Router do
 
     get("/login", UserController, :login)
     get("/details", UserController, :create_session)
+    get("/margins/:segment_type", UserController, :funds_and_margins)
     # Test route
     get("/all", UserController, :index)
   end

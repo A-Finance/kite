@@ -1,0 +1,37 @@
+<.header>
+  User <%= @data.user_id  %> | Funds and Margins | Commodity
+</.header>
+
+<.list>
+  <:item title="net"><%= @data.net %></:item>
+</.list>
+
+<.header>
+  <div class="mt-12"></div>
+  Available Funds and Margins
+</.header>
+<.list>
+  <:item title="adhoc_margin"><%= @data.adhoc_margin %></:item>
+  <:item title="cash"><%= @data.cash %></:item>
+  <:item title="collateral"><%= @data.collateral %></:item>
+  <:item title="intraday_payin"><%= @data.intraday_payin %></:item>
+  <:item title="live_balance"><%= @data.live_balance %></:item>
+  <:item title="opening_balance"><%= @data.opening_balance %></:item>
+</.list>
+
+<.header>
+  <div class="mt-12"></div>
+  Utilised Funds and Margins
+</.header>
+<.list>
+  <:item title="debits"><%= @data.debits %></:item>
+  <:item title="delivery"><%= @data.delivery %></:item>
+  <:item title="exposure"><%= @data.exposure %></:item>
+  <:item title="holding_sales"><%= @data.holding_sales %></:item>
+  <:item title="liquid_collateral"><%= @data.liquid_collateral %></:item>
+  <:item title="m2m_realised"><%= @data.m2m_realised %></:item>
+  <:item title="payout"><%= @data.payout %></:item>
+  <:item title="span"><%= @data.span %></:item>
+  <:item title="stock_collateral"><%= @data.stock_collateral %></:item>
+  <:item title="turnover"><%= @data.turnover %></:item>
+</.list>
