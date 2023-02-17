@@ -52,7 +52,8 @@ defmodule Kite.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 1.8"},
-      {:pbkdf2_elixir, "~> 2.0"}
+      {:pbkdf2_elixir, "~> 2.0"},
+      {:nimble_csv, "~> 1.2.0"}
     ]
   end
 
