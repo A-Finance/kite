@@ -74,3 +74,30 @@ Redirect to a page code:
   "10": "segment",
   "11": "exchange"
 }
+
+"0": "instrument_token",
+"1": "exchange_token",
+"2": "tradingsymbol",
+"3": "name",
+"4": "last_price",
+"5": "expiry",
+"6": "strike",
+"7": "tick_size",
+"8": "lot_size",
+"9": "instrument_type",
+"10": "segment",
+"11": "exchange"
+
+    "exchange" => "NSE",
+    "exchange_token" => "1135",
+    "expiry" => "",
+    "instrument_token" => "290569",
+    "instrument_type" => "EQ",
+    "last_price" => "0",
+    "lot_size" => "0",
+    "name" => "NIFTY MICROCAP250",
+    "segment" => "INDICES",
+    "strike" => "0",
+    "tick_size" => "0",
+    "tradingsymbol" => "NIFTY MICROCAP250"
+    

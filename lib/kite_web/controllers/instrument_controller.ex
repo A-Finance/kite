@@ -1,7 +1,7 @@
 defmodule KiteWeb.InstrumentController do
   use KiteWeb, :controller
 
-  alias Kite.User_Profile
+  alias Kite.Instruments
   alias Kite.User_Profile.User
   alias KiteWeb.Request
   alias KiteWeb.Auth
@@ -73,6 +73,11 @@ defmodule KiteWeb.InstrumentController do
     current_dir = __DIR__
     filename = "file.csv"
 
+    _filename_nse = "file_nse.csv"
+    _filename_bse = "file_bse.csv"
+
+    _stock_exchanges = ["NSE", "BSE"]
+
     # Concatenate the path and filename.
     file_path = Path.join([current_dir, path, filename])
 
@@ -80,12 +85,23 @@ defmodule KiteWeb.InstrumentController do
     File.write!(file_path, data)
 
     # Read the contents back from the file.
-    {:ok, file_data} = File.read(file_path)
+    # {:ok, file_data} = File.read(file_path)
 
     column_names = get_column_names(file_path)
 
-    "column_names" |> IO.inspect()
-    column_names |> IO.inspect()
+    # "column_names" |> IO.inspect()
+    # column_names |> IO.inspect()
+
+    # res =
+    #   file_path
+    #   |> File.stream!()
+    #   |> CSV.parse_stream(skip_headers: true)
+    #   |> Enum.map(fn row ->
+    #     row
+    #     # |> Enum.with_index()
+    #     # |> Map.new(fn {val, num} -> {column_names[num], val} end)
+    #     |> create_or_skip()
+    #   end)
 
     res =
       file_path
@@ -117,10 +133,17 @@ defmodule KiteWeb.InstrumentController do
     # res |> IO.inspect()
   end
 
-  def create_or_skip(row) do
-    # "csv row" |> IO.inspect()
-    # row |> IO.inspect()
-    {:ok, row}
+  def create_or_skip(instrument) do
+    case Instruments.create_nse_instruments(instrument) do
+      {:ok, instrument} ->
+        # conn =
+        #   conn
+        #   |> put_resp_cookie("user-id-cookie", user.user_id, sign: true)
+        instrument
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        changeset
+    end
   end
 end
 

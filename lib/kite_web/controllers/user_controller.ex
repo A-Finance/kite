@@ -86,7 +86,7 @@ defmodule KiteWeb.UserController do
     # segment_type |> IO.inspect()
     url = @funds_and_margins_path <> "/" <> segment_type
     user_id = get_session(conn, :user_id)
-    access_token = Auth.get_access_token(user_id)
+    {:ok, access_token} = Auth.get_access_token(user_id)
 
     Request.get(url, nil, auth_header(access_token), @request_options)
     |> case do
