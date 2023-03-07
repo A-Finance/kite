@@ -101,3 +101,4 @@ Redirect to a page code:
     "tick_size" => "0",
     "tradingsymbol" => "NIFTY MICROCAP250"
     
+mix phx.gen.schema Instruments.MarketInstruments market_instruments exchange:string exchange_token:string expiry:string instrument_token:string instrument_type:string last_price:string lot_size:string name:string segment:string strike:string tick_size:string tradingsymbol:string market_watch_id:string:unique

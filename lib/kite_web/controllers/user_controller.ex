@@ -2,7 +2,7 @@ defmodule KiteWeb.UserController do
   use KiteWeb, :controller
 
   alias Kite.User_Profile
-  alias Kite.User_Profile.User
+  alias Kite.UserProfile.User
   alias KiteWeb.Request
   alias KiteWeb.Auth
 

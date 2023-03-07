@@ -1,4 +1,4 @@
-defmodule Kite.User_Profile.User do
+defmodule Kite.UserProfile.User do
   use Ecto.Schema
   import Ecto.Changeset
 

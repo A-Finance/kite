@@ -1,15 +1,16 @@
-defmodule Kite.Instruments.NSE do
+defmodule Kite.Instruments.MarketInstruments do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "nse" do
+  schema "market_instruments" do
     field(:exchange, :string)
     field(:exchange_token, :string)
-    field(:expiry, :string, default: "nil")
+    field(:expiry, :string)
     field(:instrument_token, :string)
     field(:instrument_type, :string)
     field(:last_price, :string)
     field(:lot_size, :string)
+    field(:market_watch_id, :string)
     field(:name, :string)
     field(:segment, :string)
     field(:strike, :string)
@@ -20,8 +21,8 @@ defmodule Kite.Instruments.NSE do
   end
 
   @doc false
-  def changeset(nse, attrs) do
-    nse
+  def changeset(market_instruments, attrs) do
+    market_instruments
     |> cast(attrs, [
       :exchange,
       :exchange_token,
@@ -34,7 +35,8 @@ defmodule Kite.Instruments.NSE do
       :segment,
       :strike,
       :tick_size,
-      :tradingsymbol
+      :tradingsymbol,
+      :market_watch_id
     ])
     |> validate_required([
       :exchange,
@@ -48,8 +50,9 @@ defmodule Kite.Instruments.NSE do
       :segment,
       :strike,
       :tick_size,
-      :tradingsymbol
+      :tradingsymbol,
+      :market_watch_id
     ])
-    |> unique_constraint(:exchange_token)
+    |> unique_constraint(:market_watch_id)
   end
 end

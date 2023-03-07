@@ -1,23 +1,14 @@
 defmodule Kite.User_Profile do
-  @moduledoc """
-  The User_Profile context.
-  """
-
   import Ecto.Query, warn: false
   alias Kite.Repo
 
-  alias Kite.User_Profile.User
+  # ⭐ USER PROFILE
+  alias Kite.UserProfile.User
 
-  @doc """
-  Returns the list of users.
-  """
   def list_users do
     Repo.all(User)
   end
 
-  @doc """
-  Creates a user.
-  """
   def create_user(attrs \\ %{}) do
     user = get_user(attrs["user_id"])
 
@@ -34,9 +25,6 @@ defmodule Kite.User_Profile do
     end
   end
 
-  @doc """
-  Updates a user.
-  """
   def update_user(%User{} = user, attrs) do
     update_user = User.changeset(user, attrs)
 
@@ -59,9 +47,6 @@ defmodule Kite.User_Profile do
     end
   end
 
-  @doc """
-  Gets a single user.
-  """
   # Returns nil if no result is found
   def get_user(user_id), do: Repo.get_by(User, user_id: user_id)
   # def get_user!(user_id), do: Repo.get_by!(User, user_id: user_id)
@@ -78,9 +63,9 @@ defmodule Kite.User_Profile do
     end
   end
 
-  # EQUITY
+  # ⭐ EQUITY
 
-  alias Kite.User__profile.Margins_Equity
+  alias Kite.UserProfile.MarginsEquity
 
   # make entry of user's funds and margin in equity segment
   def create_margins_equity(user_id, attrs \\ %{}) do
@@ -97,18 +82,18 @@ defmodule Kite.User_Profile do
       # attrs |> IO.inspect()
 
       user_margins_equity =
-        %Margins_Equity{}
-        |> Margins_Equity.changeset(data)
+        %MarginsEquity{}
+        |> MarginsEquity.changeset(data)
         |> Repo.insert()
 
       {:ok, user_margins_equity}
     end
   end
 
-  def get_user_margins_equity(user_id), do: Repo.get_by(Margins_Equity, user_id: user_id)
+  def get_user_margins_equity(user_id), do: Repo.get_by(MarginsEquity, user_id: user_id)
 
-  def update_user_margins_equity(%Margins_Equity{} = user_margins_equity, attrs) do
-    update_user_margins_equity = Margins_Equity.changeset(user_margins_equity, attrs)
+  def update_user_margins_equity(%MarginsEquity{} = user_margins_equity, attrs) do
+    update_user_margins_equity = MarginsEquity.changeset(user_margins_equity, attrs)
 
     case Repo.update(update_user_margins_equity) do
       {:ok, user_margins_equity} ->
@@ -119,22 +104,14 @@ defmodule Kite.User_Profile do
     end
   end
 
-  @doc """
-  Returns the list of margins_equity.
-
-  ## Examples
-
-      iex> list_margins_equity()
-      [%Margins_Equity{}, ...]
-
-  """
+  # Returns the list of margins_equity.
   def list_margins_equity do
-    Repo.all(Margins_Equity)
+    Repo.all(MarginsEquity)
   end
 
-  # COMMODITY
+  # ⭐ COMMODITY
 
-  alias Kite.User__profile.Margins_Commodity
+  alias Kite.UserProfile.MarginsCommodity
 
   # make entry of user's funds and margin in commodity segment
   def create_margins_commodity(user_id, attrs \\ %{}) do
@@ -151,18 +128,18 @@ defmodule Kite.User_Profile do
       # attrs |> IO.inspect()
 
       user_margins_commodity =
-        %Margins_Commodity{}
-        |> Margins_Commodity.changeset(data)
+        %MarginsCommodity{}
+        |> MarginsCommodity.changeset(data)
         |> Repo.insert()
 
       {:ok, user_margins_commodity}
     end
   end
 
-  def get_user_margins_commodity(user_id), do: Repo.get_by(Margins_Commodity, user_id: user_id)
+  def get_user_margins_commodity(user_id), do: Repo.get_by(MarginsCommodity, user_id: user_id)
 
-  def update_user_margins_commodity(%Margins_Commodity{} = user_margins_commodity, attrs) do
-    update_user_margins_commodity = Margins_Commodity.changeset(user_margins_commodity, attrs)
+  def update_user_margins_commodity(%MarginsCommodity{} = user_margins_commodity, attrs) do
+    update_user_margins_commodity = MarginsCommodity.changeset(user_margins_commodity, attrs)
 
     case Repo.update(update_user_margins_commodity) do
       {:ok, user_margins_commodity} ->
@@ -173,20 +150,11 @@ defmodule Kite.User_Profile do
     end
   end
 
-  @doc """
-  Returns the list of margins_commodity.
-
-  ## Examples
-
-      iex> list_margins_commodity()
-      [%Margins_Commodity{}, ...]
-
-  """
   def list_margins_commodity do
-    Repo.all(Margins_Commodity)
+    Repo.all(MarginsCommodity)
   end
 
-  # COMMON FOR BOTH COMMODITY AND EQUITY
+  # ⭐ COMMON FOR BOTH COMMODITY AND EQUITY
   def extract_attributes(
         %{"available" => available, "enabled" => enabled, "net" => net, "utilised" => utilised},
         user_id

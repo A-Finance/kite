@@ -1,103 +1,82 @@
 defmodule Kite.Instruments do
-  @moduledoc """
-  The Instruments context.
-  """
-
   import Ecto.Query, warn: false
   alias Kite.Repo
 
   alias Kite.Instruments.NSE
+  alias Kite.Instruments.MarketInstruments
 
-  @doc """
-  Returns the list of nse.
+  def list_instruments do
+    Repo.all(MarketInstruments)
+  end
 
-  ## Examples
+  def get_instrument(market_watch_id) do
+    Repo.get_by(MarketInstruments, market_watch_id: market_watch_id)
+  end
 
-      iex> list_nse()
-      [%NSE{}, ...]
+  def create_instrument(attrs \\ %{}) do
+    # "attributres" |> IO.inspect()
+    # attrs |> IO.inspect()
+    instrument = get_instrument(attrs["market_watch_id"])
 
-  """
+    if instrument != nil do
+      updated_instrument = update_instrument(instrument, attrs)
+      {:ok, updated_instrument}
+    else
+      res =
+        %MarketInstruments{}
+        |> MarketInstruments.changeset(attrs)
+        |> Repo.insert()
+
+      res
+    end
+  end
+
+  def update_instrument(%MarketInstruments{} = instrument, attrs) do
+    instrument
+    |> MarketInstruments.changeset(attrs)
+    |> Repo.update()
+  end
+
+  # ⭐ NSE alone
+
   def list_nse do
     Repo.all(NSE)
   end
 
-  @doc """
-  Gets a single nse.
-
-  Raises `Ecto.NoResultsError` if the Nse does not exist.
-
-  ## Examples
-
-      iex> get_nse!(123)
-      %NSE{}
-
-      iex> get_nse!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_nse!(id), do: Repo.get!(NSE, id)
 
-  @doc """
-  Creates a nse.
-
-  ## Examples
-
-      iex> create_nse(%{field: value})
-      {:ok, %NSE{}}
-
-      iex> create_nse(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_nse_instruments(attrs \\ %{}) do
-    %NSE{}
-    |> NSE.changeset(attrs)
-    |> Repo.insert()
+  def get_nse_instrument(exchange_token) do
+    Repo.get_by(NSE, exchange_token: exchange_token)
   end
 
-  @doc """
-  Updates a nse.
+  def create_nse_instruments(attrs \\ %{}) do
+    # "attributres" |> IO.inspect()
+    # attrs |> IO.inspect()
+    instrument = get_nse_instrument(attrs["exchange_token"])
 
-  ## Examples
+    if instrument != nil do
+      updated_instrument = update_nse_instrument(instrument, attrs)
+      {:ok, updated_instrument}
+    else
+      res =
+        %NSE{}
+        |> NSE.changeset(attrs)
+        |> Repo.insert()
 
-      iex> update_nse(nse, %{field: new_value})
-      {:ok, %NSE{}}
+      res
+    end
+  end
 
-      iex> update_nse(nse, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_nse(%NSE{} = nse, attrs) do
+  def update_nse_instrument(%NSE{} = nse, attrs) do
     nse
     |> NSE.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a nse.
-
-  ## Examples
-
-      iex> delete_nse(nse)
-      {:ok, %NSE{}}
-
-      iex> delete_nse(nse)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_nse(%NSE{} = nse) do
     Repo.delete(nse)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking nse changes.
-
-  ## Examples
-
-      iex> change_nse(nse)
-      %Ecto.Changeset{data: %NSE{}}
-
-  """
   def change_nse(%NSE{} = nse, attrs \\ %{}) do
     NSE.changeset(nse, attrs)
   end

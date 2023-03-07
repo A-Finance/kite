@@ -2,7 +2,7 @@ defmodule KiteWeb.InstrumentController do
   use KiteWeb, :controller
 
   alias Kite.Instruments
-  alias Kite.User_Profile.User
+  alias Kite.UserProfile.User
   alias KiteWeb.Request
   alias KiteWeb.Auth
   alias NimbleCSV.RFC4180, as: CSV
@@ -20,15 +20,15 @@ defmodule KiteWeb.InstrumentController do
 
   # @create_session_path "/session/token"
   # @funds_and_margins_path "/user/margins"
-  @instruments_base_path "/instruments"
+  @instruments_base_path "/instruments/"
   @doc """
   Get all tradable `instruments` by `exchange`
-  
+
   ## Example
-  
+
     {:ok, instruments} = KiteConnectEx.Portfolio.instruments("access-token", "NSE")
   """
-  def instruments(conn, %{"exchange" => exchange}) do
+  def instruments(conn, _params) do
     user_id = get_session(conn, :user_id)
 
     access_token =
@@ -41,7 +41,7 @@ defmodule KiteWeb.InstrumentController do
           {:error, json(conn, error)}
       end
 
-    Request.get(instruments_path(exchange), nil, auth_header(access_token), @request_options)
+    Request.get(@instruments_base_path, nil, auth_header(access_token), @request_options)
     |> case do
       {:ok, instruments_csv_dump} ->
         {:ok, instruments_csv_dump}
@@ -53,15 +53,12 @@ defmodule KiteWeb.InstrumentController do
       {:error, error} ->
         {:error, json(conn, error)}
     end
-
-    # {:error, error} ->
-    #   {:error, json(conn, error)}
-    # end
   end
 
-  defp instruments_path(exchange) do
-    @instruments_base_path <> "/" <> exchange
-  end
+  # defp instruments_path(exchange) do
+  #   @instruments_base_path <> "/" <> exchange
+  #   # "#{@api_mf_url3}#{search_id}"
+  # end
 
   defp auth_header(access_token) do
     [{"Authorization", "token " <> @api_key <> ":" <> access_token}]
@@ -84,9 +81,6 @@ defmodule KiteWeb.InstrumentController do
     # Write the contents to the file.
     File.write!(file_path, data)
 
-    # Read the contents back from the file.
-    # {:ok, file_data} = File.read(file_path)
-
     column_names = get_column_names(file_path)
 
     # "column_names" |> IO.inspect()
@@ -97,10 +91,17 @@ defmodule KiteWeb.InstrumentController do
     #   |> File.stream!()
     #   |> CSV.parse_stream(skip_headers: true)
     #   |> Enum.map(fn row ->
-    #     row
-    #     # |> Enum.with_index()
-    #     # |> Map.new(fn {val, num} -> {column_names[num], val} end)
-    #     |> create_or_skip()
+    #     row =
+    #       row
+    #       |> Enum.with_index()
+    #       |> Map.new(fn {val, num} -> {column_names[num], val} end)
+
+    #     {:ok, res_con} =
+    #       Task.async_stream(
+    #         create_or_skip(row),
+    #         [],
+    #         max_concurrency: 10
+    #       )
     #   end)
 
     res =
@@ -121,25 +122,23 @@ defmodule KiteWeb.InstrumentController do
   end
 
   def get_column_names(file) do
-    # res =
     file
     |> File.stream!()
     |> CSV.parse_stream(skip_headers: false)
     |> Enum.fetch!(0)
     |> Enum.with_index()
     |> Map.new(fn {val, num} -> {num, val} end)
-
-    # "column names" |> IO.inspect()
-    # res |> IO.inspect()
   end
 
   def create_or_skip(instrument) do
+    # "row mameyhfshbw" |> IO.inspect()
+    # instrument |> IO.inspect()
+
     case Instruments.create_nse_instruments(instrument) do
       {:ok, instrument} ->
-        # conn =
-        #   conn
-        #   |> put_resp_cookie("user-id-cookie", user.user_id, sign: true)
-        instrument
+        # "row saved?" |> IO.inspect()
+        # instrument |> IO.inspect()
+        {:ok, "done"}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         changeset

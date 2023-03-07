@@ -1,8 +1,8 @@
-defmodule Kite.User__profile.Margins_Equity do
+defmodule Kite.UserProfile.MarginsCommodity do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "margins_equity" do
+  schema "margins_commodity" do
     field(:adhoc_margin, :float)
     field(:cash, :float)
     field(:collateral, :float)
@@ -29,8 +29,8 @@ defmodule Kite.User__profile.Margins_Equity do
   end
 
   @doc false
-  def changeset(margins__equity, attrs) do
-    margins__equity
+  def changeset(margins__commodity, attrs) do
+    margins__commodity
     |> cast(attrs, [
       :enabled,
       :net,
