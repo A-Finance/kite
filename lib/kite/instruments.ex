@@ -16,15 +16,18 @@ defmodule Kite.Instruments do
   def create_instrument(attrs \\ %{}) do
     # "attributres" |> IO.inspect()
     # attrs |> IO.inspect()
-    instrument = get_instrument(attrs["market_watch_id"])
+
+    market_watch_id = "#{attrs["exchange"]}:#{attrs["tradingsymbol"]}"
+    instrument_attrs = Map.put(attrs, "market_watch_id", market_watch_id)
+    instrument = get_instrument(market_watch_id)
 
     if instrument != nil do
-      updated_instrument = update_instrument(instrument, attrs)
+      updated_instrument = update_instrument(instrument, instrument_attrs)
       {:ok, updated_instrument}
     else
       res =
         %MarketInstruments{}
-        |> MarketInstruments.changeset(attrs)
+        |> MarketInstruments.changeset(instrument_attrs)
         |> Repo.insert()
 
       res
@@ -37,7 +40,7 @@ defmodule Kite.Instruments do
     |> Repo.update()
   end
 
-  # ⭐ NSE alone
+  # ⭐⭐⭐ NSE alone
 
   def list_nse do
     Repo.all(NSE)
