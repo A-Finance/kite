@@ -51,7 +51,9 @@ defmodule Kite.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:httpoison, "~> 1.8"}
+      {:httpoison, "~> 1.8"},
+      {:pbkdf2_elixir, "~> 2.0"},
+      {:nimble_csv, "~> 1.2.0"}
     ]
   end
 
